@@ -1,0 +1,13 @@
+FROM pydevopsmodule
+
+RUN pip install pytest
+RUN pip install pytest-cov
+
+COPY . /tests
+RUN mkdir /tests/junit
+
+RUN chmod +x /tests/runtests.sh
+
+WORKDIR "/app"
+
+CMD ["bash", "/tests/runtests.sh"]

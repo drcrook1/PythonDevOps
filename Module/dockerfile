@@ -1,0 +1,20 @@
+FROM continuumio/miniconda3
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+
+RUN apt-get install build-essential -y
+
+RUN pip install --upgrade pip setuptools wheel
+
+ADD requirements.txt /prereqs/
+RUN pip install -r /prereqs/requirements.txt
+
+COPY . /app
+WORKDIR '/app'
+
+# Ensure that Python outputs everything that's printed inside
+# the application rather than buffering it.
+ENV PYTHONUNBUFFERED 1
+
+CMD ["python", "run.py"]
